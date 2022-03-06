@@ -35,13 +35,13 @@ class _CountdownTimerState extends State<CountdownTimer> {
     return Container(
       height: .15 * screenHeight,
       width: .15 * screenHeight,
-      margin: const EdgeInsets.symmetric(vertical: 32),
+      margin: const EdgeInsets.symmetric(vertical: 40),
       child: Stack(
         alignment: Alignment.center,
         fit: StackFit.expand,
         children: [
           CircularProgressIndicator(
-            value: seconds / maxSeconds,
+            value: 1 - seconds / maxSeconds,
             strokeWidth: 12,
             valueColor: const AlwaysStoppedAnimation(Colors.white),
             backgroundColor: Colors.pink,
@@ -51,6 +51,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
               '$seconds',
               style: const TextStyle(
                 fontSize: 64,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),

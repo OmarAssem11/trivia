@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
-  const AnswerWidget(this.text);
-  final String text;
+  const AnswerWidget({required this.answerText});
+  final String answerText;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
       child: Container(
-        height: 100,
-        width: 100,
-        color: Colors.amber,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
         child: Center(
           child: Text(
-            text,
+            answerText,
             style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
