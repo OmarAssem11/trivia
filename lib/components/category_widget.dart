@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trivia/screens/quiz_screen.dart';
+import 'package:trivia/screens/difficulty_screen.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
@@ -14,7 +14,7 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed(
-        QuizScreen.routeName,
+        DifficultyScreen.routeName,
         arguments: name,
       ),
       child: Container(

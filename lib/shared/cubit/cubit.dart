@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:trivia/models/quiz_model.dart';
+import 'package:trivia/shared/constants.dart';
 import 'package:trivia/shared/cubit/states.dart';
 
 class QuizCubit extends Cubit<QuizStates> {
   QuizCubit() : super(QuizInitialState());
   static QuizCubit get(BuildContext context) => BlocProvider.of(context);
+  int getCategoryNumber({required String category}) =>
+      categoriesNumbers[category]!;
   final baseUrl = 'https://opentdb.com';
-  Future<QuizModel> getQuestion() async {
-    final url = Uri.parse('$baseUrl/api.php?amount=1&type=multiple');
+  Future<QuizModel> getQuestions({
+    required String category,
+    required String difficulty,
+  }) async {
+    final categoryNumber = getCategoryNumber(category: category);
+    final url = Uri.parse(
+      '$baseUrl/api.php?amount=10&category=$categoryNumber&$difficulty=easy&type=multiple',
+    );
     final response = await http.get(url);
     final data = jsonDecode(response.body) as Map<String, dynamic>;
     final results = data['results'] as List;
