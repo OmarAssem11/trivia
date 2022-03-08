@@ -49,11 +49,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           Center(
             child: Text(
               '$seconds',
-              style: const TextStyle(
-                fontSize: 64,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
         ],

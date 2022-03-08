@@ -15,10 +15,7 @@ class AnswerWidget extends StatelessWidget {
         child: Center(
           child: Text(
             answerText,
-            style: const TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
         ),
       ),

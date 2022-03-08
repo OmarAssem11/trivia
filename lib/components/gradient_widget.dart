@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trivia/shared/theme/colors.dart';
+import 'package:trivia/shared/theme/theme.dart';
 
 class GradientWidget extends StatelessWidget {
   const GradientWidget({required this.child});

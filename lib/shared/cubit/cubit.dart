@@ -9,21 +9,24 @@ import 'package:trivia/shared/cubit/states.dart';
 class QuizCubit extends Cubit<QuizStates> {
   QuizCubit() : super(QuizInitialState());
   static QuizCubit get(BuildContext context) => BlocProvider.of(context);
-  int getCategoryNumber({required String category}) =>
-      categoriesNumbers[category]!;
+
   final baseUrl = 'https://opentdb.com';
-  Future<QuizModel> getQuestions({
-    required String category,
-    required String difficulty,
-  }) async {
-    final categoryNumber = getCategoryNumber(category: category);
+  late String category;
+  late String difficulty;
+
+  int getCategoryNumber() => categoriesNumbers[category]!;
+
+  Future<QuizModel> getQuestions() async {
+    final categoryNumber = getCategoryNumber();
     final url = Uri.parse(
-      '$baseUrl/api.php?amount=10&category=$categoryNumber&$difficulty=easy&type=multiple',
+      '$baseUrl/api.php?amount=1&category=$categoryNumber&difficulty=$difficulty&type=multiple',
     );
     final response = await http.get(url);
     final data = jsonDecode(response.body) as Map<String, dynamic>;
     final results = data['results'] as List;
+    print(results);
     final quizData = results[0] as Map;
+    print(quizData);
     final quiz = QuizModel(
       question: quizData['question'] as String,
       correctAnswer: quizData['correct_answer'] as String,

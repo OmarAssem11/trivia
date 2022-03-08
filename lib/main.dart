@@ -5,6 +5,8 @@ import 'package:trivia/screens/home_screen.dart';
 import 'package:trivia/screens/quiz_screen.dart';
 import 'package:trivia/shared/bloc_observer.dart';
 import 'package:trivia/shared/cubit/cubit.dart';
+import 'package:trivia/shared/cubit/states.dart';
+import 'package:trivia/shared/theme/theme.dart';
 
 void main() {
   BlocOverrides.runZoned(
@@ -18,14 +20,23 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const DifficultyScreen(),
-      routes: {
-        HomeScreen.routeName: (context) => const HomeScreen(),
-        QuizScreen.routeName: (context) => const QuizScreen(),
-        DifficultyScreen.routeName: (context) => const DifficultyScreen(),
-      },
+    return BlocProvider(
+      create: (_) => QuizCubit(),
+      child: BlocConsumer<QuizCubit, QuizStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: const HomeScreen(),
+            theme: myTheme,
+            routes: {
+              HomeScreen.routeName: (context) => const HomeScreen(),
+              QuizScreen.routeName: (context) => const QuizScreen(),
+              DifficultyScreen.routeName: (context) => const DifficultyScreen(),
+            },
+          );
+        },
+      ),
     );
   }
 }

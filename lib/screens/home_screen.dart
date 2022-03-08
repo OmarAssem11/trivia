@@ -6,6 +6,7 @@ class HomeScreen extends StatelessWidget {
   static const routeName = 'home_screen';
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -16,26 +17,18 @@ class HomeScreen extends StatelessWidget {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 "Let's Play",
-                style: TextStyle(
-                  color: Colors.pink,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: textTheme.headline1,
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Choose a category',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey,
-                ),
+                style: textTheme.headline2,
               ),
-              SizedBox(height: 16),
-              CategoryGrid(),
+              const SizedBox(height: 16),
+              const CategoryGrid(),
             ],
           ),
         ),
