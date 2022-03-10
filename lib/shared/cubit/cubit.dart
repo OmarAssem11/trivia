@@ -83,10 +83,11 @@ class QuizCubit extends Cubit<QuizStates> {
     if (answer == quizList[questionIndex].correctAnswer) {
       score++;
     }
-    questionIndex++;
-    seconds = 10;
-    if (questionIndex == 10) {
+    if (questionIndex == 9) {
       endQuiz(context);
+    } else {
+      questionIndex++;
+      seconds = 10;
     }
     emit(AnswerQuestionState());
   }

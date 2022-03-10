@@ -12,13 +12,13 @@ class CountdownTimer extends StatelessWidget {
     return BlocConsumer<QuizCubit, QuizStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is GetQuestionsSuccessState || state is AnswerQuestionState) {
+        if (state is GetQuestionsSuccessState) {
           cubit.startTimer(context);
         }
         return Container(
           height: .15 * screenHeight,
           width: .15 * screenHeight,
-          margin: const EdgeInsets.symmetric(vertical: 32),
+          margin: const EdgeInsets.symmetric(vertical: 28),
           child: Stack(
             alignment: Alignment.center,
             fit: StackFit.expand,
