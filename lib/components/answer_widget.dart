@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:trivia/shared/cubit/cubit.dart';
 
 class AnswerWidget extends StatelessWidget {
-  const AnswerWidget({required this.answerText});
-  final String answerText;
+  const AnswerWidget({required this.answer});
+  final String answer;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => QuizCubit.get(context).answerQuestion(answer: answer),
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -14,8 +15,9 @@ class AnswerWidget extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            answerText,
+            answer,
             style: Theme.of(context).textTheme.headlineLarge,
+            textAlign: TextAlign.center,
           ),
         ),
       ),

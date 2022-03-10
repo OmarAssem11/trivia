@@ -4,7 +4,6 @@ import 'package:trivia/components/answers_grid.dart';
 import 'package:trivia/components/countdown_timer.dart';
 import 'package:trivia/components/gradient_widget.dart';
 import 'package:trivia/components/question_widget.dart';
-import 'package:trivia/models/quiz_model.dart';
 import 'package:trivia/shared/cubit/cubit.dart';
 import 'package:trivia/shared/cubit/states.dart';
 
@@ -13,44 +12,75 @@ class QuizScreen extends StatelessWidget {
   static const routeName = 'question_screen';
   @override
   Widget build(BuildContext context) {
-    QuizModel? quiz;
+    final cubit = QuizCubit.get(context);
+    final quizList = cubit.quizList;
     return BlocConsumer<QuizCubit, QuizStates>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is QuizInitialState) {
-          QuizCubit.get(context).getQuestions().then((value) => quiz = value);
+          cubit.getQuestions();
         }
         return Scaffold(
           body: SafeArea(
             child: GradientWidget(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 24),
-                    QuestionWidget(
-                      quiz != null ? quiz!.question : '',
-                    ),
-                    const CountdownTimer(),
-                    AnswersGrid(
-                      choices: [
-                        if (quiz != null) quiz!.correctAnswer else '',
-                        if (quiz != null)
-                          quiz!.incorrectAnswers[0] as String
-                        else
-                          '',
-                        if (quiz != null)
-                          quiz!.incorrectAnswers[1] as String
-                        else
-                          '',
-                        if (quiz != null)
-                          quiz!.incorrectAnswers[2] as String
-                        else
-                          '',
-                      ],
-                    ),
-                  ],
-                ),
+                child: quizList.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: LinearProgressIndicator(
+                                  value: cubit.questionIndex / 10,
+                                  minHeight: 10,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Text(
+                                '${cubit.questionIndex}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              const Text(
+                                '/10',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.pink,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Expanded(
+                            child: QuestionWidget(
+                              quizList[cubit.questionIndex].question,
+                            ),
+                          ),
+                          const CountdownTimer(),
+                          Expanded(
+                            flex: 3,
+                            child: AnswersGrid(
+                              choices: [
+                                quizList[cubit.questionIndex].correctAnswer,
+                                quizList[cubit.questionIndex]
+                                    .incorrectAnswers[0] as String,
+                                quizList[cubit.questionIndex]
+                                    .incorrectAnswers[1] as String,
+                                quizList[cubit.questionIndex]
+                                    .incorrectAnswers[2] as String,
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ),

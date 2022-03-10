@@ -6,16 +6,14 @@ class AnswersGrid extends StatelessWidget {
   final List<String> choices;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 16,
-          crossAxisSpacing: 16,
-        ),
-        itemBuilder: (_, index) => AnswerWidget(answerText: choices[index]),
-        itemCount: 4,
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
       ),
+      itemBuilder: (_, index) => AnswerWidget(answer: choices[index]),
+      itemCount: 4,
     );
   }
 }

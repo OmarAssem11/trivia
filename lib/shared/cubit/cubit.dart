@@ -16,25 +16,40 @@ class QuizCubit extends Cubit<QuizStates> {
 
   int getCategoryNumber() => categoriesNumbers[category]!;
 
-  Future<QuizModel> getQuestions() async {
+  void getQuestions() {
     final categoryNumber = getCategoryNumber();
     final url = Uri.parse(
-      '$baseUrl/api.php?amount=1&category=$categoryNumber&difficulty=$difficulty&type=multiple',
+      '$baseUrl/api.php?amount=10&category=$categoryNumber&difficulty=$difficulty&type=multiple',
     );
-    final response = await http.get(url);
-    final data = jsonDecode(response.body) as Map<String, dynamic>;
-    final results = data['results'] as List;
-    print(results);
-    final quizData = results[0] as Map;
-    print(quizData);
-    final quiz = QuizModel(
-      question: quizData['question'] as String,
-      correctAnswer: quizData['correct_answer'] as String,
-      incorrectAnswers: quizData['incorrect_answers'] as List,
-      category: quizData['category'] as String,
-      difficulty: quizData['difficulty'] as String,
-    );
-    emit(GetQuestionSuccessState());
-    return quiz;
+    http.get(url).then((response) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final results = data['results'] as List;
+      for (final quizData in results) {
+        quizData as Map;
+        final quiz = QuizModel(
+          question: quizData['question'] as String,
+          correctAnswer: quizData['correct_answer'] as String,
+          incorrectAnswers: quizData['incorrect_answers'] as List,
+          category: quizData['category'] as String,
+          difficulty: quizData['difficulty'] as String,
+        );
+        quizList.add(quiz);
+      }
+    }).catchError((error) {
+      emit(GetQuestionsErrorState(error.toString()));
+    });
+  }
+
+  final List<QuizModel> quizList = [];
+
+  int questionIndex = 0;
+  int score = 0;
+
+  void answerQuestion({required String answer}) {
+    questionIndex++;
+    if (answer == quizList[questionIndex].correctAnswer) {
+      score++;
+    }
+    emit(AnswerQuestionState());
   }
 }

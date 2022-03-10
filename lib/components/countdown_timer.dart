@@ -35,7 +35,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
     return Container(
       height: .15 * screenHeight,
       width: .15 * screenHeight,
-      margin: const EdgeInsets.symmetric(vertical: 40),
+      margin: const EdgeInsets.symmetric(vertical: 32),
       child: Stack(
         alignment: Alignment.center,
         fit: StackFit.expand,
