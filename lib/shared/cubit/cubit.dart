@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:trivia/models/quiz_model.dart';
+import 'package:trivia/screens/quiz_screen.dart';
+import 'package:trivia/screens/score_screen.dart';
 import 'package:trivia/shared/constants.dart';
 import 'package:trivia/shared/cubit/states.dart';
 
@@ -34,6 +37,7 @@ class QuizCubit extends Cubit<QuizStates> {
           difficulty: quizData['difficulty'] as String,
         );
         quizList.add(quiz);
+        emit(GetQuestionsSuccessState());
       }
     }).catchError((error) {
       emit(GetQuestionsErrorState(error.toString()));
@@ -45,11 +49,60 @@ class QuizCubit extends Cubit<QuizStates> {
   int questionIndex = 0;
   int score = 0;
 
-  void answerQuestion({required String answer}) {
-    questionIndex++;
+  final maxSeconds = 10;
+  int seconds = 10;
+  Timer? timer;
+  void startTimer(BuildContext context) {
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) {
+        if (seconds > 0) {
+          seconds--;
+          emit(CountDownState());
+        } else {
+          timeUp(context);
+        }
+      },
+    );
+  }
+
+  void startQuiz({
+    required String selectedDifficulty,
+    required BuildContext context,
+  }) {
+    difficulty = selectedDifficulty.toLowerCase();
+    emit(GetQuestionLoadingState());
+    getQuestions();
+    Navigator.of(context).pushReplacementNamed(QuizScreen.routeName);
+  }
+
+  void answerQuestion({
+    required String answer,
+    required BuildContext context,
+  }) {
     if (answer == quizList[questionIndex].correctAnswer) {
       score++;
     }
+    questionIndex++;
+    seconds = 10;
+    if (questionIndex == 10) {
+      endQuiz(context);
+    }
     emit(AnswerQuestionState());
+  }
+
+  void timeUp(BuildContext context) {
+    if (questionIndex < 9) {
+      questionIndex++;
+      seconds = 10;
+      emit(TimeUpState());
+    } else {
+      endQuiz(context);
+    }
+  }
+
+  void endQuiz(BuildContext context) {
+    Navigator.of(context).pushReplacementNamed(ScoreScreen.routeName);
+    emit(EndQuizState());
   }
 }

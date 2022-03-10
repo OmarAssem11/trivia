@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trivia/screens/quiz_screen.dart';
 import 'package:trivia/shared/cubit/cubit.dart';
 import 'package:trivia/shared/cubit/states.dart';
 
@@ -17,10 +16,10 @@ class DifficultyWidget extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return InkWell(
-          onTap: () {
-            QuizCubit.get(context).difficulty = difficulty.toLowerCase();
-            Navigator.of(context).pushReplacementNamed(QuizScreen.routeName);
-          },
+          onTap: () => QuizCubit.get(context).startQuiz(
+            selectedDifficulty: difficulty,
+            context: context,
+          ),
           child: Container(
             margin: const EdgeInsets.only(top: 32),
             padding: const EdgeInsets.symmetric(vertical: 8),

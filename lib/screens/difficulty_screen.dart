@@ -31,25 +31,6 @@ class DifficultyScreen extends StatelessWidget {
                 imagePath: 'assets/images/hard.png',
               ),
               const SizedBox(height: 16),
-              // ElevatedButton(
-              //   style: ButtonStyle(
-              //     fixedSize: MaterialStateProperty.all(
-              //       const Size(double.infinity, 50),
-              //     ),
-              //     backgroundColor: MaterialStateProperty.all(Colors.pink),
-              //   ),
-              //   onPressed: () => Navigator.of(context).pushReplacementNamed(
-              //     QuizScreen.routeName,
-              //     arguments: QuizArguments(
-              //       category: category,
-              //       difficulty: difficulty,
-              //     ),
-              //   ),
-              //   child: const Text(
-              //     'START',
-              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              //   ),
-              // ),
             ],
           ),
         ),

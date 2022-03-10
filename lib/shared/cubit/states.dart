@@ -12,3 +12,9 @@ class GetQuestionsErrorState extends QuizStates {
 }
 
 class AnswerQuestionState extends QuizStates {}
+
+class CountDownState extends QuizStates {}
+
+class TimeUpState extends QuizStates {}
+
+class EndQuizState extends QuizStates {}

@@ -17,15 +17,12 @@ class QuizScreen extends StatelessWidget {
     return BlocConsumer<QuizCubit, QuizStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        if (state is QuizInitialState) {
-          cubit.getQuestions();
-        }
         return Scaffold(
           body: SafeArea(
             child: GradientWidget(
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: quizList.isEmpty
+                child: state is GetQuestionLoadingState
                     ? const Center(child: CircularProgressIndicator())
                     : Column(
                         children: [

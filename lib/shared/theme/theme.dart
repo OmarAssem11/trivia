@@ -32,11 +32,6 @@ ThemeData myTheme = ThemeData(
       color: Colors.white,
       fontWeight: FontWeight.bold,
     ),
-    headlineLarge: TextStyle(
-      fontSize: 32,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-    ),
   ),
 );
 

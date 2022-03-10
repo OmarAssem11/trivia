@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivia/screens/difficulty_screen.dart';
 import 'package:trivia/screens/home_screen.dart';
 import 'package:trivia/screens/quiz_screen.dart';
+import 'package:trivia/screens/score_screen.dart';
 import 'package:trivia/shared/bloc_observer.dart';
 import 'package:trivia/shared/cubit/cubit.dart';
 import 'package:trivia/shared/cubit/states.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
               HomeScreen.routeName: (context) => const HomeScreen(),
               QuizScreen.routeName: (context) => const QuizScreen(),
               DifficultyScreen.routeName: (context) => const DifficultyScreen(),
+              ScoreScreen.routeName: (context) => const ScoreScreen(),
             },
           );
         },

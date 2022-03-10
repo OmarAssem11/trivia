@@ -7,7 +7,10 @@ class AnswerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => QuizCubit.get(context).answerQuestion(answer: answer),
+      onTap: () => QuizCubit.get(context).answerQuestion(
+        answer: answer,
+        context: context,
+      ),
       child: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -16,7 +19,7 @@ class AnswerWidget extends StatelessWidget {
         child: Center(
           child: Text(
             answer,
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: Theme.of(context).textTheme.headline4,
             textAlign: TextAlign.center,
           ),
         ),
